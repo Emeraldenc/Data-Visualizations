@@ -1,0 +1,33 @@
+---
+title: "Assignment 2.2"
+author: "Rachel Nelson"
+date: "9/20/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tinytex)
+```
+
+## R Markdown
+
+```{r df}
+df <- read.csv("world-population.csv")
+summary(df)
+```
+
+## Including Plots
+
+```{r line chart, echo=TRUE}
+# Create a basic stair steps plot 
+plot(df$ï..Year, df$Population, type = "l",main = "R - Line Chart",col = "yellow")
+```
+
+```{r step chart, echo=TRUE}
+# Create a basic stair steps plot 
+plot(df$ï..Year, df$Population, type = "S",main = "R - Step Chart",col = "purple")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+

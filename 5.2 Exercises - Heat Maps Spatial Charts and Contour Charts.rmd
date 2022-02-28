@@ -1,0 +1,66 @@
+---
+title: "5.2 Exercises - Heat Maps Spatial Charts and Contour Charts"
+author: "Rachel Nelson"
+date: "10/31/2021"
+output:
+  html_document:
+    df_print: paged
+  HTML: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+
+library(maps)
+library(reshape)
+library(plotly)
+
+
+```
+
+### Import data into dataframe
+
+```{r data}
+data<-read.csv("D:/College/DSC640/ex5-2/ex5-2/ppg2008.csv", header=TRUE)
+costcos<-read.csv("D:/College/DSC640/ex5-2/ex5-2/costcos-geocoded.csv", header=TRUE)
+data_unpivoted<-read.csv("D:/College/DSC640/ppg2008_unpivoted.csv", header=TRUE)
+
+```
+
+## R - Heat Map
+
+```{r hmap, echo=FALSE}
+row.names(data) <- data$Name
+data <- data[,2:20]
+matrix <- data.matrix(data)
+heatmap <- heatmap(matrix, Rowv=NA, Colv=NA, col = cm.colors(256), scale="column", margins=c(5,10))
+
+```
+
+## R - Spatial Chart
+
+```{r spatial, echo=FALSE}
+
+#render usa map
+map(database="state")
+#USA
+symbols(costcos$Longitude,
+ costcos$Latitude,
+ circles=rep(1, length(costcos$Longitude)),
+ inches=0.05, add=TRUE,main="R - Spatial Chart")
+
+
+
+```
+
+
+## R - Contour Chart
+Example taken from https://plotly.com/r/contour-plots/
+```{r contour1, echo=FALSE}
+fig <- plot_ly(z = ~volcano, type = "contour")
+fig <- fig %>% colorbar(title = "R - Contour Chart")
+fig
+
+```

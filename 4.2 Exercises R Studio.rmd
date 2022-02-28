@@ -1,0 +1,44 @@
+---
+title: "Assignment 3.2 Treemap and Area Charts"
+author: "Rachel Nelson"
+date: "9/28/2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tinytex)
+```
+
+## Load the data
+
+```{r df, echo=FALSE}
+df <- read.csv("D:/College/DSC640/ex4-2/ex4-2/crimerates-by-state-2005.csv", header=TRUE)
+summary(df)
+```
+
+## SCatterplot
+```{r scatterplot, echo=FALSE}
+plot(df$larceny_theft, df$motor_vehicle_theft,main="R - Scatterplot", pch=19,col="purple")
+```
+
+## Bubble Chart
+```{r bubblechart, echo=FALSE}
+
+ggplot(df, aes(x = larceny_theft, y = motor_vehicle_theft)) + 
+  geom_point(aes(size = robbery), alpha = 0.5) +
+  scale_size(range = c(0.5, 12)) + ggtitle("R - Bubble Chart") # Adjust the range of points size
+
+
+```
+
+## Density Map
+```{r densitymap, echo=FALSE}
+d <- density(df$population) # returns the density data
+plot(d, main="R - Density Plot") # plots the results
+polygon(d, col="purple", border="yellow")
+```
+

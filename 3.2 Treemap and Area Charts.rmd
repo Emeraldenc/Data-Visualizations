@@ -1,0 +1,56 @@
+---
+title: "Assignment 3.2 Treemap and Area Charts"
+author: "Rachel Nelson"
+date: "9/28/2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(treemap)
+library(ggplot2)
+library(tinytex)
+```
+
+## Load the data
+
+```{r df, echo=FALSE}
+df <- read.table("expenditures.txt",sep="\t", header=TRUE)
+summary(df)
+```
+
+## Treemap
+```{r pressure, echo=FALSE}
+treemap(df,index=c("category"), vSize = "expenditure",title="R - Treemap")
+```
+
+## Area Chart
+```{r summary, echo=FALSE}
+df1 <- aggregate(df$expenditure, by=list(Category=df$year),FUN=sum)
+summary(df1)
+```
+
+## Area Chart
+```{r areac, echo=FALSE}
+number_ticks <- function(n) {function(limits) pretty(limits, n)}
+plot = ggplot(df1, aes(x=Category, y=x))
+plot + geom_area() + 
+  geom_area( fill="#52307c", alpha=0.4)+
+  ggtitle("R - Area Chart") +
+  xlab("Year") + ylab("expenditure")+
+  scale_x_continuous(breaks=number_ticks(10)) +
+  scale_y_continuous(breaks=number_ticks(10))
+```
+
+## Stacked Area Chart
+```{r areast, echo=FALSE}
+plot = ggplot(df, aes(x=year, y=expenditure, fill=category))
+plot + geom_area()+
+  ggtitle("R - Stacked Area Chart") +
+  scale_x_continuous(breaks=number_ticks(10)) +
+  scale_y_continuous(breaks=number_ticks(10))
+```
+
+
